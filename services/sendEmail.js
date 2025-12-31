@@ -28,99 +28,101 @@ const sendEmail = async(token) => {
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Registration Confirmation</title>
                 </head>
-                <body style="margin: 0; padding: 0; background-color: #f4f4f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                <body style="margin: 0; padding: 0; background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
 
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tr>
-                            <td style="padding: 20px 0 30px 0;">
+                            <td style="padding: 40px 0;">
                                 
-                                <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                                <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0;">
                                     
+                                    <!-- Minimalist Header -->
                                     <tr>
-                                        <td align="center" style="padding: 40px 0 30px 0; background-color: #2563eb;">
-                                            <h1 style="margin: 0; font-size: 24px; color: #ffffff;">Confirm you registration</h1>
+                                        <td align="center" style="padding: 40px 0 30px 0; background-color: #ffffff; border-bottom: 1px solid #f1f5f9;">
+                                            <h1 style="margin: 0; font-size: 24px; font-weight: 700; color: #1e293b; letter-spacing: -0.5px;">Confirm Registration</h1>
                                         </td>
                                     </tr>
 
+                                    <!-- Content Section -->
                                     <tr>
-                                        <td style="padding: 40px 30px;">
-                                            <p style="margin: 0 0 20px 0; color: #333333; font-size: 16px; line-height: 24px;">
+                                        <td style="padding: 40px 40px;">
+                                            <p style="margin: 0 0 20px 0; color: #334155; font-size: 16px; line-height: 24px;">
                                                 Hello <strong>${decoded.name}</strong>,
                                             </p>
-                                            <p style="margin: 0 0 30px 0; color: #555555; font-size: 16px; line-height: 24px;">
-                                                We are pleased to inform you that your seat has been successfully reserved. Below are your registration details for the upcoming event.
+                                            <p style="margin: 0 0 30px 0; color: #64748b; font-size: 15px; line-height: 24px;">
+                                                We are pleased to inform you that your seat has been reserved. Please verify your details below to complete the process.
                                             </p>
 
-                                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;">
+                                            <!-- Data Table -->
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 30px;">
                                                 <tr>
-                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 14px; width: 30%;">
-                                                        <strong>Full Name</strong>
+                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; width: 35%;">
+                                                        Full Name
                                                     </td>
-                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #333333; font-size: 14px; font-weight: 600;">
+                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #1e293b; font-size: 15px; font-weight: 600;">
                                                         ${decoded.name}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 14px;">
-                                                        <strong>Email</strong>
+                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">
+                                                        Email
                                                     </td>
-                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #333333; font-size: 14px;">
-                                                        <a href="mailto:${decoded.email}" style="color: #2563eb; text-decoration: none;">${decoded.email}</a>
+                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #1e293b; font-size: 15px;">
+                                                        <a href="mailto:${decoded.email}" style="color: #0f172a; text-decoration: none; border-bottom: 1px solid #cbd5e1;">${decoded.email}</a>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 14px;">
-                                                        <strong>Roll Number</strong>
+                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">
+                                                        Roll Number
                                                     </td>
-                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #333333; font-size: 14px;">
+                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #1e293b; font-size: 15px;">
                                                         ${decoded.rollNumber}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 14px;">
-                                                        <strong>Branch</strong>
+                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">
+                                                        Branch
                                                     </td>
-                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #333333; font-size: 14px;">
+                                                    <td style="padding: 15px; border-bottom: 1px solid #e2e8f0; color: #1e293b; font-size: 15px;">
                                                         ${decoded.branch}
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="padding: 15px; color: #64748b; font-size: 14px;">
-                                                        <strong>Activity Code</strong>
+                                                    <td style="padding: 15px; color: #64748b; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">
+                                                        Activity Code
                                                     </td>
-                                                    <td style="padding: 15px; color: #2563eb; font-size: 14px; font-weight: bold;">
+                                                    <td style="padding: 15px; color: #0f172a; font-size: 15px; font-weight: 700;">
                                                         ${decoded.subjectCode}
                                                     </td>
                                                 </tr>
                                             </table>
+
+                                            <!-- CTA Button -->
                                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                                 <tr>
-                                                    <td align="center" style="padding: 30px 0 10px 0;">
+                                                    <td align="center" style="padding: 10px 0;">
                                                         <a href="${verificationURL}" 
-                                                        style="background-color: #22c55e; color: #ffffff; padding: 14px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-block;">
+                                                        style="background-color: #0f172a; color: #ffffff; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; display: inline-block; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
                                                             Confirm Registration
                                                         </a>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td align="center">
-                                                        <p style="font-size: 12px; color: #94a3b8; margin-top: 10px;">
-                                                            Click the button above to confirm your registration.
+                                                        <p style="font-size: 13px; color: #94a3b8; margin-top: 20px;">
+                                                            This link will expire in 24 hours.
                                                         </p>
                                                     </td>
                                                 </tr>
                                             </table>
-
-                                            <p style="margin: 30px 0 0 0; color: #555555; font-size: 16px; line-height: 24px;">
-                                                Please keep this email as proof of your registration. If you have any questions, feel free to reply to this email.
-                                            </p>
                                         </td>
                                     </tr>
 
+                                    <!-- Footer -->
                                     <tr>
-                                        <td align="center" style="padding: 30px; background-color: #060010; color: #ffffff;">
-                                            <p style="margin: 10px 0 0 0; font-size: 12px; color: #94a3b8;">
-                                                You received this email because you registered on our portal.
+                                        <td align="center" style="padding: 30px; background-color: #f8fafc; border-top: 1px solid #e2e8f0;">
+                                            <p style="margin: 0; font-size: 12px; color: #94a3b8; line-height: 1.5;">
+                                                You received this email because you registered on our portal.<br>
                                             </p>
                                         </td>
                                     </tr>

@@ -41,7 +41,8 @@ route.post('/submit', async(req, res) => {
 
     const token = jwt.sign(
         { name, email, rollNumber, branch, subjectCode, gender },
-        process.env.JWT_SECRET
+        process.env.JWT_SECRET,
+        {expiresIn: '24h'},
     )
 
     try {
