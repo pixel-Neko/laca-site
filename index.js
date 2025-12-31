@@ -19,11 +19,12 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 connectToMongoDB(process.env.MONGO_URI)
-.then(() => console.log(`MongoDB connected`))
-.catch((err) => console.log(`Mongo Error: ${err}`));
+    .then(() => console.log(`MongoDB connected`))
+    .catch((err) => console.log(`Mongo Error: ${err}`));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
     res.render('home');
@@ -41,5 +42,5 @@ app.get('/seats', async(req, res) => {
     }
 })
 
-const PORT = process.env.PORT || 8000
+const PORT = 8089
 app.listen(PORT, () => console.log(`Server started on - http://localhost:${PORT}`));

@@ -16,6 +16,13 @@ route.post('/submit', async(req, res) => {
         });
     }
 
+    if( !email.endsWith('@nith.ac.in') ) {
+        return res.status(400).json({
+            success: false,
+            message: "Only college emails are allowed",
+        })
+    }
+
     const existingUser = await Form.findOne({ email });
     if( existingUser ) {
         return res.status(400).json({

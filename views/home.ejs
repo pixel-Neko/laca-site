@@ -1,236 +1,657 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
+    <link rel="icon" href="/nith.png" type="image/png">
+    <title>Course Registration</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --dark-bg: #060010;
-            --light-text: #f8fafc;
-            --danger: #ef4444;
-            --success: #22c55e;
-        }
-        
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        
-        body { margin: 0; padding: 0; display: flex; height: 100vh; overflow: hidden; }
+            /* Refined Monochrome Palette */
+            --bg-body: #f1f5f9;
+            /* Cool Gray 100 - Main Background */
+            --bg-card: #ffffff;
+            /* White - Form Card */
+            --bg-sidebar: #e2e8f0;
+            /* Cool Gray 200 - Sidebar Background */
+            --bg-input: #f8fafc;
+            /* Cool Gray 50 - Input Background */
 
-        /* --- LEFT SIDE: FORM (60%) --- */
+            --text-primary: #1e293b;
+            /* Slate 800 */
+            --text-secondary: #64748b;
+            /* Slate 500 */
+            --text-light: #94a3b8;
+            /* Slate 400 */
+
+            --accent-dark: #0f172a;
+            /* Slate 900 - Buttons/Strong Accents */
+            --accent-hover: #334155;
+            /* Slate 700 */
+
+            --border-subtle: #cbd5e1;
+            /* Slate 300 */
+            --border-focus: #94a3b8;
+
+            --danger: #ef4444;
+            --success: #10b981;
+
+            /* Modern Shadows */
+            --shadow-card: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+        }
+
+        /* --- LEFT SIDE: FORM SECTION (60%) --- */
         .form-section {
             flex: 6;
             padding: 40px;
             overflow-y: auto;
-            background-color: #ffffff;
+            background-color: var(--bg-body);
+            /* Gray Background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             position: relative;
         }
 
-        .form-container { max-width: 600px; margin: 0 auto; }
-        
-        h1 { color: #333; margin-bottom: 30px; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 5px; }
-
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; color: #4b5563; }
-        
-        input, select {
+        /* The "Floating" Card */
+        .form-container {
+            background-color: var(--bg-card);
+            padding: 40px 50px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-card);
+            max-width: 580px;
             width: 100%;
-            padding: 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            font-size: 14px;
-            background: #f8fafc;
-            transition: border 0.2s;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #fff;
+            /* Subtle highlight */
         }
 
-        input:focus, select:focus {
+        header {
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin: 0 0 8px 0;
+            color: var(--text-primary);
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+        /* Modern Notice Box */
+        .notice-box {
+            background-color: #f8fafc;
+            border-left: 4px solid var(--accent-dark);
+            color: var(--text-secondary);
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+
+        /* Styled Inputs */
+        input,
+        select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            font-size: 15px;
+            background: var(--bg-input);
+            /* Grayish Input */
+            color: var(--text-primary);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            appearance: none;
+        }
+
+        input:hover,
+        select:hover {
+            border-color: #94a3b8;
+        }
+
+        input:focus,
+        select:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--accent-dark);
             background: #fff;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+            transform: translateY(-1px);
+        }
+
+        /* Custom Select Arrow */
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: "";
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-size: contain;
+            pointer-events: none;
+        }
+
+        .row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .col {
+            flex: 1;
         }
 
         button {
             width: 100%;
-            padding: 14px;
-            background-color: var(--primary);
+            padding: 16px;
+            background-color: var(--accent-dark);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 12px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: 0.02em;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
             margin-top: 10px;
+            box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.3);
         }
-        button:hover { background-color: #1d4ed8; }
-        button:disabled { background-color: #94a3b8; cursor: not-allowed; }
 
-        /* Notification Alert Styles */
-        #alert-box {
-            display: none;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 6px;
+        button:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.3);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* Footer Credits */
+        .footer-credits {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px dashed var(--border-subtle);
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-light);
             font-weight: 500;
         }
-        .alert-success { background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-        .alert-error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
 
-        /* --- RIGHT SIDE: SEATS INFO (40%) --- */
-        .info-section {
-            flex: 4;
-            background-color: var(--dark-bg);
-            color: var(--light-text);
-            padding: 40px;
-            overflow-y: auto;
-            border-left: 1px solid #333;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+        .footer-credits a {
+            color: var(--text-primary);
+            font-weight: 700;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
         }
 
-        .info-header { margin-bottom: 30px; text-align: center; }
-        .info-header h2 { margin: 0; font-size: 24px; color: #fff; }
-        .info-header p { color: #94a3b8; font-size: 14px; }
+        .footer-credits a:hover {
+            border-bottom-color: var(--text-primary);
+        }
+
+        /* Alert Styles */
+        #alert-box {
+            display: none;
+            padding: 14px;
+            margin-bottom: 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            animation: fadeIn 0.3s ease;
+            text-align: center;
+        }
+
+        .alert-success {
+            background-color: #ecfdf5;
+            color: #047857;
+            border: 1px solid #d1fae5;
+        }
+
+        .alert-error {
+            background-color: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fee2e2;
+        }
+
+        /* --- RIGHT SIDE: INFO SECTION (40%) --- */
+        .info-section {
+            flex: 4;
+            background-color: var(--bg-sidebar);
+            /* Darker gray sidebar */
+            padding: 40px;
+            overflow-y: auto;
+            border-left: 1px solid #d1d5db;
+            box-shadow: inset 5px 0 15px -5px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-header {
+            margin-bottom: 30px;
+            position: sticky;
+            top: 0;
+            background: var(--bg-sidebar);
+            padding-bottom: 10px;
+            z-index: 10;
+            border-bottom: 1px solid #d1d5db;
+        }
+
+        .info-header h2 {
+            margin: 0 0 6px 0;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .info-header p {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 14px;
+        }
 
         .seat-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            margin-bottom: 12px;
-            border-radius: 8px;
+            background: #ffffff;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: none;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: slideIn 0.4s ease-out forwards;
+            opacity: 0;
         }
 
-        .subject-info { display: flex; flex-direction: column; }
-        .subject-code { font-weight: bold; color: var(--primary); font-size: 14px; }
-        .subject-name { font-size: 13px; color: #cbd5e1; }
-        .seat-count { text-align: right; font-weight: bold; font-size: 18px; }
-        .seat-label { font-size: 10px; color: #64748b; display: block; }
-        
-        .low-seats { color: var(--danger); }
-        .good-seats { color: var(--success); }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
 
-        @media (max-width: 768px) {
-            body { flex-direction: column-reverse; height: auto; overflow: auto; }
-            .info-section { padding: 20px; }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .seat-card:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: var(--shadow-card);
+        }
+
+        .subject-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .subject-code {
+            font-weight: 800;
+            color: var(--accent-dark);
+            font-size: 15px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .subject-name {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .seat-status {
+            text-align: right;
+            background: var(--bg-body);
+            padding: 6px 12px;
+            border-radius: 8px;
+        }
+
+        .seat-count {
+            font-weight: 800;
+            font-size: 18px;
+            line-height: 1;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .seat-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+
+        .text-danger {
+            color: var(--danger);
+        }
+
+        .text-success {
+            color: var(--success);
+        }
+
+        .text-neutral {
+            color: var(--text-primary);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+                height: auto;
+                overflow: auto;
+            }
+
+            .form-section {
+                padding: 20px;
+                flex: none;
+            }
+
+            .form-container {
+                padding: 30px 20px;
+                box-shadow: none;
+                border: 1px solid var(--border-subtle);
+            }
+
+            .info-section {
+                padding: 30px 20px;
+                flex: none;
+                border-left: none;
+                border-bottom: 1px solid var(--border-subtle);
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <% 
-        const branches = [
-            'Computer Science and Engineering', 
-            'Dual CSE', 
-            'Electrical Engineering', 
-            'Electronics and Communication Engineering', 
-            'Dual ECE', 
-            'Mechanical Engineering', 
-            'Mathematics and Computing', 
-            'Chemical Engineering', 
-            'Engineering Physics', 
-            'Materials Science and Engineering', 
-            'Civil Engineering'
-        ];
-
-        const subjectNames = {
-            'SA-201': 'National Cadet Corps (NCC)',
-            'SA-202': 'National Service Scheme (NSS)', 
-            'SA-203': 'Yoga and Meditation',
-            'SA-204': 'Sports Activities',
-            'SA-205': 'Prayas', 
-            'SA-206': 'Martial Arts',
-            'SA-207': 'Music, Dance, and Dramatics',
-            'SA-208': 'Social Service and Discipline',
-            'SA-209': 'Photography and Creative Art',
-        };
-        const subjectCodes = Object.keys(subjectNames); 
-    %>
-
+    <!-- Left Side: Registration Form -->
     <div class="form-section">
         <div class="form-container">
-            <h1>Student Registration</h1>
-            
+            <header>
+                <h1>Registration of LA/CA courses</h1>
+                <p class="subtitle">Semester 2026</p>
+                <div class="notice-box">
+                    <span style="font-weight: 800; font-size: 16px; margin-right: 8px;">!</span>
+                    <span>Note: NCC students are strictly required to enroll in the <strong>NCC (SA-201)</strong> course
+                        only.</span>
+                </div>
+            </header>
+
             <div id="alert-box"></div>
 
             <form id="regForm">
-                
+
                 <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" name="name" id="name" autocomplete="name" required placeholder="Enter your full name">
+                    <label for="name">Full Name</label>
+                    <input type="text" name="name" id="name" autocomplete="name" required placeholder="Your Name">
                 </div>
 
                 <div class="form-group">
-                    <label>College Email</label>
-                    <input type="email" name="email" id="email" autocomplete="email" required placeholder="rollno@college.edu">
+                    <label for="email">College Email</label>
+                    <input type="email" name="email" id="email" autocomplete="email" required
+                        placeholder="rollno@nith.ac.in">
                 </div>
 
-                <div class="form-group" style="display: flex; gap: 20px;">
-                    <div style="flex: 1;">
-                        <label>Gender</label>
-                        <select name="gender" id="gender" required>
-                            <option value="">Select</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
+                <div class="row form-group">
+                    <div class="col">
+                        <label for="gender">Gender</label>
+                        <div class="select-wrapper">
+                            <select name="gender" id="gender" required>
+                                <option value="">Select...</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="rollNumber">Roll Number</label>
+                        <input type="text" name="rollNumber" id="rollNumber" required placeholder="24BCS..."
+                            style="text-transform: uppercase;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="branch">Branch</label>
+                    <div class="select-wrapper">
+                        <select name="branch" id="branch" required>
+                            <option value="">Select your Branch</option>
+                            <!-- Options populated by JS -->
                         </select>
                     </div>
-                    <div style="flex: 1;">
-                        <label>Roll Number</label>
-                        <input type="text" name="rollNumber" id="rollNumber" required placeholder="23MI..." style="text-transform: uppercase;">
+                </div>
+
+                <div class="form-group">
+                    <label for="subjectCode">Activity Selection</label>
+                    <div class="select-wrapper">
+                        <select name="subjectCode" id="subjectCode" required>
+                            <option value="">Select Activity...</option>
+                            <!-- Options populated by JS -->
+                        </select>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Branch</label>
-                    <select name="branch" id="branch" required>
-                        <option value="">Select your Branch</option>
-                        <% branches.forEach(branch => { %>
-                            <option value="<%= branch %>"><%= branch %></option>
-                        <% }) %>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Activity Code</label>
-                    <select name="subjectCode" id="subjectCode" required>
-                        <option value="">Select Code...</option>
-                        <% subjectCodes.forEach((code) => { %>
-                            <option value="<%= code %>"><%= code %></option>
-                        <% }) %>
-                    </select>
-                </div>
-
-                <button type="submit" id="submitBtn">Confirm Seat</button>
+                <button type="submit" id="submitBtn">Confirm Registration</button>
             </form>
+
+            <!-- Footer Section -->
+            <footer class="footer-credits">
+                Developed by <a href="https://github.com/ayush00git" target="_blank">Ayush</a> and <a
+                    href="https://github.com/pixel-Neko" target="_blank">Aryan</a>
+            </footer>
         </div>
     </div>
 
+    <!-- Right Side: Live Availability -->
     <div class="info-section">
         <div class="info-header">
             <h2>Live Availability</h2>
-            <p>Real-time updates. Max 100 per subject.</p>
+            <p>Real-time seat tracking. Max 90 seats per activity.</p>
         </div>
         <div id="seats-container">
-            <p style="text-align: center; color: #666;">Loading seat data...</p>
+            <!-- Seat cards populated by JS -->
+            <p style="color:var(--text-secondary); text-align:center; margin-top: 40px;">Connecting to server...</p>
         </div>
     </div>
 
     <script>
-        // --- PART 1: FORM HANDLING (AJAX) ---
+        // --- CONFIGURATION ---
+        const MAX_SEATS = 90;
+
+        const branches = [
+            'Computer Science and Engineering',
+            'Dual CSE',
+            'Electrical Engineering',
+            'Electronics and Communication Engineering',
+            'Dual ECE',
+            'Mechanical Engineering',
+            'Mathematics and Computing',
+            'Chemical Engineering',
+            'Engineering Physics',
+            'Materials Science and Engineering',
+            'Civil Engineering',
+            'Architecture'
+        ];
+
+        const subjectNames = {
+            'SA-201': 'National Cadet Corps (NCC)',
+            'SA-202': 'National Service Scheme (NSS)',
+            'SA-203': 'Yoga and Meditation',
+            'SA-204': 'Sports Activities',
+            'SA-205': 'Prayas',
+            'SA-206': 'Martial Arts',
+            'SA-207': 'Music, Dance, and Dramatics',
+            'SA-208': 'Social Service and Discipline',
+            'SA-209': 'Photography and Creative Art',
+            'SA-210': 'Horticulture',
+            'SA-211': 'Swachh Bharat (Clean India)',
+            'SA-212': 'Nasha Mukti & Stress Mgmt'
+        };
+
+        // --- INITIALIZATION ---
+        const branchSelect = document.getElementById('branch');
+        const subjectSelect = document.getElementById('subjectCode');
+        const seatsContainer = document.getElementById('seats-container');
+
+        // Populate Branch Dropdown
+        branches.forEach(branch => {
+            const opt = document.createElement('option');
+            opt.value = branch;
+            opt.textContent = branch;
+            branchSelect.appendChild(opt);
+        });
+
+        // Populate Subject Dropdown (Initial)
+        Object.entries(subjectNames).forEach(([code, name]) => {
+            const opt = document.createElement('option');
+            opt.value = code;
+            opt.textContent = `${code} - ${name}`;
+            subjectSelect.appendChild(opt);
+        });
+
+
+        // --- FUNCTIONS ---
+
+        async function fetchAndRenderSeats() {
+            try {
+                // Fetch from backend
+                const response = await fetch('/seats');
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                const data = await response.json();
+
+                // Transform to map for O(1) lookup
+                const seatMap = {};
+                if (Array.isArray(data)) {
+                    data.forEach(item => {
+                        seatMap[item.code] = item.seatsFilled;
+                    });
+                }
+
+                renderSeats(seatMap);
+
+            } catch (error) {
+                // Fallback for preview
+                renderSeats({});
+            }
+        }
+
+        function renderSeats(seatData) {
+            seatsContainer.innerHTML = '';
+
+            Object.entries(subjectNames).forEach(([code, name], index) => {
+                const filled = seatData[code] || 0;
+                const available = MAX_SEATS - filled;
+
+                let countColor = 'text-neutral';
+                if (available < 10) countColor = 'text-danger';
+                else if (available > (MAX_SEATS / 2)) countColor = 'text-success';
+
+                const card = document.createElement('div');
+                card.className = 'seat-card';
+                // Add staggered animation delay
+                card.style.animationDelay = `${index * 50}ms`;
+
+                card.innerHTML = `
+                    <div class="subject-info">
+                        <span class="subject-code">${code}</span>
+                        <span class="subject-name" title="${name}">${name}</span>
+                    </div>
+                    <div class="seat-status">
+                        <span class="seat-count ${countColor}">${available}</span>
+                        <span class="seat-label">Left</span>
+                    </div>
+                `;
+                seatsContainer.appendChild(card);
+
+                // Update dropdown state
+                const option = subjectSelect.querySelector(`option[value="${code}"]`);
+                if (option) {
+                    if (available <= 0) {
+                        option.disabled = true;
+                        option.textContent = `${code} - ${name} (FULL)`;
+                    } else {
+                        option.disabled = false;
+                        option.textContent = `${code} - ${name}`;
+                    }
+                }
+            });
+        }
+
+        // --- FORM HANDLING ---
         const form = document.getElementById('regForm');
         const alertBox = document.getElementById('alert-box');
         const submitBtn = document.getElementById('submitBtn');
 
         form.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Stop page reload
+            e.preventDefault();
 
-            // 1. Disable UI
             submitBtn.disabled = true;
-            submitBtn.innerText = "Processing...";
+            submitBtn.innerText = "Processing Request...";
             alertBox.style.display = 'none';
 
-            // 2. Gather Data
             const formData = {
                 name: document.getElementById('name').value,
                 email: document.getElementById('email').value,
@@ -241,7 +662,6 @@
             };
 
             try {
-                // 3. Send to API
                 const response = await fetch('/form/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -250,85 +670,34 @@
 
                 const result = await response.json();
 
-                // 4. Handle Result based on 'success' boolean
                 alertBox.style.display = 'block';
-                alertBox.innerText = result.message; 
-
                 if (result.success) {
-                    // Success (Green)
                     alertBox.className = 'alert-success';
-                    form.reset(); // Clear input fields
-                    updateSeats(); // Force immediate update of sidebar
+                    alertBox.innerText = result.message || "Successfully registered!";
+                    form.reset();
+                    fetchAndRenderSeats();
                 } else {
-                    // Error (Red)
                     alertBox.className = 'alert-error';
+                    alertBox.innerText = result.message || "Registration failed. Please try again.";
                 }
 
             } catch (err) {
                 alertBox.style.display = 'block';
-                alertBox.innerText = "Network Error. Please try again.";
                 alertBox.className = 'alert-error';
+                alertBox.innerText = "Connection Error. Please check your network.";
             } finally {
-                // Re-enable button
                 submitBtn.disabled = false;
-                submitBtn.innerText = "Confirm Seat";
+                submitBtn.innerText = "Confirm Registration";
             }
         });
 
+        // Initial Render
+        fetchAndRenderSeats();
 
-        // --- PART 2: LIVE SEATS POLLING ---
-        const subjectNames = <%- JSON.stringify(subjectNames) %>;
+        // Poll every 5 seconds for updates
+        setInterval(fetchAndRenderSeats, 5000);
 
-        async function updateSeats() {
-            try {
-                const res = await fetch('/seats');
-                const data = await res.json(); 
-                
-                const container = document.getElementById('seats-container');
-                container.innerHTML = ''; 
-
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<p style="text-align:center">No subject data found.</p>';
-                    return;
-                }
-
-                data.forEach(sub => {
-                    const available = 5 - sub.seatsFilled;
-                    const name = subjectNames[sub.code] || sub.code;
-                    const colorClass = available < 10 ? 'low-seats' : 'good-seats';
-
-                    const html = `
-                        <div class="seat-card">
-                            <div class="subject-info">
-                                <span class="subject-code">${sub.code}</span>
-                                <span class="subject-name">${name}</span>
-                            </div>
-                            <div class="seat-count">
-                                <span class="${colorClass}">${available}</span>
-                                <span class="seat-label">Seats Left</span>
-                            </div>
-                        </div>
-                    `;
-                    container.innerHTML += html;
-
-                    // Disable dropdown option if full
-                    if (available <= 0) {
-                        const option = document.querySelector(`#subjectCode option[value="${sub.code}"]`);
-                        if(option) {
-                            option.disabled = true;
-                            option.innerText = sub.code + ' (FULL)';
-                        }
-                    }
-                });
-
-            } catch (err) {
-                console.error("Failed to fetch seats", err);
-            }
-        }
-
-        // Start polling
-        updateSeats();
-        setInterval(updateSeats, 10000); 
     </script>
 </body>
+
 </html>
