@@ -38,7 +38,7 @@ route.get('/verify-email', async (req, res) => {
         await newReg.save();
         console.log(`New user: ${decoded.email}`);
         const sub = await Subject.findOneAndUpdate(
-            { code: decoded.subjectCode, seatsFilled: { $lt: 5 } },
+            { code: decoded.subjectCode, seatsFilled: { $lt: 90 } },
             { $inc: { seatsFilled: 1 } },
             { new: true },
         );
@@ -56,7 +56,7 @@ route.get('/verify-email', async (req, res) => {
         });
     } catch(error) {
         await Subject.findOneAndUpdate(
-            { code: decoded.subjectCode, seatsFilled: { $lt: 5 } },
+            { code: decoded.subjectCode, seatsFilled: { $lt: 90 } },
             { $inc: { seatsFilled: -1 } },
             { new: true },
         );
