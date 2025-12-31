@@ -11,6 +11,7 @@ const Subject = require("./models/subject");
 const formRoute = require("./routes/form");
 const subjectRoute = require("./routes/subject");
 const emailRoute = require("./routes/email");
+const detailsRoute = require("./routes/details");
 
 const { connectToMongoDB } = require("./connection");
 
@@ -33,6 +34,7 @@ app.get('/', (req, res) => {
 app.use('/form', formRoute);
 app.use('/subject', subjectRoute);
 app.use('/email', emailRoute);
+app.use(`/${process.env.PRIVATE_URL}`, detailsRoute);
 
 app.get('/seats', async(req, res) => {
     try {
