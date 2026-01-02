@@ -40,7 +40,7 @@ route.post('/submit', async(req, res) => {
     };
 
     const token = jwt.sign(
-        { name, email, rollNumber, branch, subjectCode, gender },
+        { name, email, rollNumber, mobileNum, branch, subjectCode, gender },
         process.env.JWT_SECRET,
         {expiresIn: '24h'},
     )
