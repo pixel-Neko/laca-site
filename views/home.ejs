@@ -71,9 +71,9 @@
             /* Firefox */
         }
 
-        /* --- LEFT SIDE: FORM SECTION (60%) --- */
+        /* --- FORM SECTION --- */
         .form-section {
-            flex: 6;
+            width: 100%;
             padding: 40px;
             overflow-y: auto;
             background-color: var(--bg-body);
@@ -286,127 +286,7 @@
             border: 1px solid #fee2e2;
         }
 
-        /* --- RIGHT SIDE: INFO SECTION (40%) --- */
-        .info-section {
-            flex: 4;
-            background-color: var(--bg-sidebar);
-            /* Darker gray sidebar */
-            padding: 40px;
-            overflow-y: auto;
-            border-left: 1px solid #d1d5db;
-            box-shadow: inset 5px 0 15px -5px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-        }
 
-        .info-header {
-            margin-bottom: 30px;
-            position: sticky;
-            top: 0;
-            background: var(--bg-sidebar);
-            padding-bottom: 10px;
-            z-index: 10;
-            border-bottom: 1px solid #d1d5db;
-        }
-
-        .info-header h2 {
-            margin: 0 0 6px 0;
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .info-header p {
-            color: var(--text-secondary);
-            margin: 0;
-            font-size: 14px;
-        }
-
-        .seat-card {
-            background: #ffffff;
-            padding: 16px 20px;
-            margin-bottom: 16px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: none;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            animation: slideIn 0.4s ease-out forwards;
-            opacity: 0;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .seat-card:hover {
-            transform: translateY(-2px) scale(1.01);
-            box-shadow: var(--shadow-card);
-        }
-
-        .subject-info {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .subject-code {
-            font-weight: 800;
-            color: var(--accent-dark);
-            font-size: 15px;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .subject-name {
-            font-size: 13px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .seat-status {
-            text-align: right;
-            background: var(--bg-body);
-            padding: 6px 12px;
-            border-radius: 8px;
-        }
-
-        .seat-count {
-            font-weight: 800;
-            font-size: 18px;
-            line-height: 1;
-            display: block;
-            margin-bottom: 2px;
-        }
-
-        .seat-label {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-secondary);
-            font-weight: 700;
-        }
-
-        .text-danger {
-            color: var(--danger);
-        }
-
-        .text-success {
-            color: var(--success);
-        }
-
-        .text-neutral {
-            color: var(--text-primary);
-        }
 
         /* Mobile Responsive */
         @media (max-width: 900px) {
@@ -523,24 +403,10 @@
         </div>
     </div>
 
-    <!-- Right Side: Live Availability -->
-    <div class="info-section">
-        <div class="info-header">
-            <h2>Live Availability</h2>
-            <p>Real-time seat tracking. Max 90 seats per activity.</p>
-        </div>
-        <div id="seats-container">
-            <!-- Seat cards populated by JS -->
-            <p style="color:var(--text-secondary); text-align:center; margin-top: 40px;">Connecting to server...</p>
-        </div>
-    </div>
+
 
     <script>
         // --- CONFIGURATION ---
-        // --- CONFIGURATION ---
-        const DEFAULT_MAX_SEATS = 120;
-        const SA205_MAX_SEATS = 60;
-
         const branches = [
             'Computer Science and Engineering',
             'Dual CSE',
@@ -575,7 +441,6 @@
         // --- INITIALIZATION ---
         const branchSelect = document.getElementById('branch');
         const subjectSelect = document.getElementById('subjectCode');
-        const seatsContainer = document.getElementById('seats-container');
 
         // Populate Branch Dropdown
         branches.forEach(branch => {
@@ -585,7 +450,7 @@
             branchSelect.appendChild(opt);
         });
 
-        // Populate Subject Dropdown (Initial)
+        // Populate Subject Dropdown
         Object.entries(subjectNames).forEach(([code, name]) => {
             const opt = document.createElement('option');
             opt.value = code;
@@ -594,76 +459,7 @@
         });
 
 
-        // --- FUNCTIONS ---
 
-        async function fetchAndRenderSeats() {
-            try {
-                // Fetch from backend
-                const response = await fetch('/seats');
-                if (!response.ok) throw new Error('Network response was not ok');
-
-                const data = await response.json();
-
-                // Transform to map for O(1) lookup
-                const seatMap = {};
-                if (Array.isArray(data)) {
-                    data.forEach(item => {
-                        seatMap[item.code] = item.seatsFilled;
-                    });
-                }
-
-                renderSeats(seatMap);
-
-            } catch (error) {
-                // Fallback for preview
-                renderSeats({});
-            }
-        }
-
-        function renderSeats(seatData) {
-            seatsContainer.innerHTML = '';
-
-            Object.entries(subjectNames).forEach(([code, name], index) => {
-                const filled = seatData[code] || 0;
-
-                // Determine limit
-                const limit = (code === 'SA-205') ? SA205_MAX_SEATS : DEFAULT_MAX_SEATS;
-                const available = limit - filled;
-
-                let countColor = 'text-neutral';
-                if (available < 10) countColor = 'text-danger';
-                else if (available > (limit / 2)) countColor = 'text-success';
-
-                const card = document.createElement('div');
-                card.className = 'seat-card';
-                // Add staggered animation delay
-                card.style.animationDelay = `${index * 50}ms`;
-
-                card.innerHTML = `
-                    <div class="subject-info">
-                        <span class="subject-code">${code}</span>
-                        <span class="subject-name" title="${name}">${name}</span>
-                    </div>
-                    <div class="seat-status">
-                        <span class="seat-count ${countColor}">${available} / ${limit}</span>
-                        <span class="seat-label">Left</span>
-                    </div>
-                `;
-                seatsContainer.appendChild(card);
-
-                // Update dropdown state
-                const option = subjectSelect.querySelector(`option[value="${code}"]`);
-                if (option) {
-                    if (available <= 0) {
-                        option.disabled = true;
-                        option.textContent = `${code} - ${name} (FULL)`;
-                    } else {
-                        option.disabled = false;
-                        option.textContent = `${code} - ${name}`;
-                    }
-                }
-            });
-        }
 
         // --- FORM HANDLING ---
         const form = document.getElementById('regForm');
@@ -701,7 +497,6 @@
                     alertBox.className = 'alert-success';
                     alertBox.innerText = result.message || "Successfully registered!";
                     form.reset();
-                    fetchAndRenderSeats();
                 } else {
                     alertBox.className = 'alert-error';
                     alertBox.innerText = result.message || "Registration failed. Please try again.";
@@ -717,11 +512,7 @@
             }
         });
 
-        // Initial Render
-        fetchAndRenderSeats();
 
-        // Poll every 10 seconds for updates
-        setInterval(fetchAndRenderSeats, 10000);
 
     </script>
 </body>
