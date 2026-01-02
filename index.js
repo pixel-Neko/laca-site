@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
     res.render('home');
 })
 app.use('/form', formRoute);
-app.use('/subject', subjectRoute);
+app.use(`/${process.env.PRIVATE_URL}/subject`, subjectRoute);
 app.use('/email', emailRoute);
 app.use(`/${process.env.PRIVATE_URL}`, detailsRoute);
   
