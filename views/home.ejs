@@ -419,24 +419,7 @@
             'Engineering Physics',
             'Materials Science and Engineering',
             'Civil Engineering',
-            'Architecture'
         ];
-
-        const subjectNames = {
-            'SA-201': 'National Cadet Corps (NCC)',
-            'SA-202': 'National Service Scheme (NSS)',
-            'SA-203': 'Yoga and Meditation',
-            'SA-204': 'Sports Activities',
-            'SA-205': 'Prayas',
-            'SA-206': 'Martial Arts',
-            'SA-207': 'Music, Dance, and Dramatics',
-            'SA-208': 'Social Service and Discipline',
-            'SA-209': 'Photography and Creative Art',
-            'SA-210': 'Swachh Bharat Abhiyan',
-            'SA-211': 'Nasha Mukti Abhiyan',
-            'SA-212': 'Horticulture',
-            'SA-213': 'Viksit Bharat'
-        };
 
         // --- INITIALIZATION ---
         const branchSelect = document.getElementById('branch');
@@ -450,13 +433,29 @@
             branchSelect.appendChild(opt);
         });
 
-        // Populate Subject Dropdown
-        Object.entries(subjectNames).forEach(([code, name]) => {
-            const opt = document.createElement('option');
-            opt.value = code;
-            opt.textContent = `${code} - ${name}`;
-            subjectSelect.appendChild(opt);
-        });
+        // Fetch and Populate Subject Dropdown from API
+        async function fetchSubjects() {
+            try {
+                const response = await fetch('/subject/api/all');
+                const result = await response.json();
+                
+                if (result.success && result.data) {
+                    result.data.forEach(subject => {
+                        const opt = document.createElement('option');
+                        opt.value = subject.code;
+                        opt.textContent = `${subject.code} - ${subject.name}`;
+                        subjectSelect.appendChild(opt);
+                    });
+                } else {
+                    console.error('Failed to fetch subjects:', result.message);
+                }
+            } catch (err) {
+                console.error('Error fetching subjects:', err);
+            }
+        }
+
+        // Call on page load
+        fetchSubjects();
 
 
 
