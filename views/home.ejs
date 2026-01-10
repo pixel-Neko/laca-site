@@ -436,18 +436,24 @@
         // Fetch and Populate Subject Dropdown from API
         async function fetchSubjects() {
             try {
-                const response = await fetch('/subject/api/all');
-                const result = await response.json();
+                // Get the correct API path from config
+                const configResponse = await fetch('/api/config');
+                const config = await configResponse.json();
+                const apiPath = config.subjectApiPath;
+
+                const response = await fetch(apiPath);
+                const data = await response.json();
                 
-                if (result.success && result.data) {
-                    result.data.forEach(subject => {
+                if (data.success && data.data && data.data.length > 0) {
+                    data.data.forEach(subject => {
                         const opt = document.createElement('option');
                         opt.value = subject.code;
                         opt.textContent = `${subject.code} - ${subject.name}`;
                         subjectSelect.appendChild(opt);
                     });
+                    console.log(`Loaded ${data.data.length} subjects from ${apiPath}`);
                 } else {
-                    console.error('Failed to fetch subjects:', result.message);
+                    console.warn('No subjects found:', data);
                 }
             } catch (err) {
                 console.error('Error fetching subjects:', err);
@@ -455,7 +461,7 @@
         }
 
         // Call on page load
-        fetchSubjects();
+        document.addEventListener('DOMContentLoaded', fetchSubjects);
 
 
 
