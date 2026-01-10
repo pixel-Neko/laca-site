@@ -39,13 +39,14 @@ route.post('/submit', async(req, res) => {
         });
     };
 
-    const token = jwt.sign(
-        { name, email, rollNumber, mobileNum, branch, subjectCode, gender },
-        process.env.JWT_SECRET,
-        {expiresIn: '24h'},
-    )
 
     try {
+        const token = jwt.sign(
+            { name, email, rollNumber, mobileNum, branch, subjectCode, gender },
+            process.env.JWT_SECRET,
+            {expiresIn: '24h'},
+        )
+
         await addEmailJob(email, token);
         console.log(`Enqueued verification email for ${email}`);
         return res.status(200).json({ 
