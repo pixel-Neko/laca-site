@@ -1,9 +1,9 @@
 const { Queue } = require("bullmq");
 const IORedis = require("ioredis");
 
-const connection = new IORedis({
-    host: '127.0.0.1',
-    port: 6379,
+const connection = new IORedis(process.env.REDIS_URL || {
+    host: process.env.REDIS_HOST || '127.0.0.1',
+    port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT, 10) : 6379,
 });
 
 const emailQueue = new Queue("verification-email", { connection });
