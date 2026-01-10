@@ -3,7 +3,7 @@ const route = express.Router();
 const Subject = require("../models/subject");
 const Form = require("../models/form");
 const dotenv = require("dotenv");
-const { sendEmail } = require("../services/sendEmail");
+const { addEmailJob } = require("../services/redis/emailQueue");
 dotenv.config();
 const jwt = require("jsonwebtoken");
 
@@ -39,20 +39,16 @@ route.post('/submit', async(req, res) => {
         });
     };
 
-    const token = jwt.sign(
-        { name, email, rollNumber, mobileNum, branch, subjectCode, gender },
-        process.env.JWT_SECRET,
-        {expiresIn: '24h'},
-    )
 
     try {
-        if(!sendEmail(token)) {
-            return res.status(400).json({ 
-                success: false,
-                message: `Error sending the email`,
-            });
-        }
-        console.log(`Email sent to ${email}`);
+        const token = jwt.sign(
+            { name, email, rollNumber, mobileNum, branch, subjectCode, gender },
+            process.env.JWT_SECRET,
+            {expiresIn: '24h'},
+        )
+
+        await addEmailJob(email, token);
+        console.log(`Enqueued verification email for ${email}`);
         return res.status(200).json({ 
                 success: true,
                 message: `Check your email inbox for confirming the seat`,
