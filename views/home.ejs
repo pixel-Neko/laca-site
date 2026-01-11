@@ -502,16 +502,21 @@
                     alertBox.className = 'alert-success';
                     alertBox.innerText = result.message || "Successfully registered!";
                     form.reset();
+                    // Keep button disabled permanently until page refresh
+                    submitBtn.innerText = "Form submitted";
                 } else {
                     alertBox.className = 'alert-error';
                     alertBox.innerText = result.message || "Registration failed. Please try again.";
+                    // Re-enable button on error to allow retry
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Confirm Registration";
                 }
 
             } catch (err) {
                 alertBox.style.display = 'block';
                 alertBox.className = 'alert-error';
                 alertBox.innerText = "Connection Error. Please check your network.";
-            } finally {
+                // Re-enable button on error to allow retry
                 submitBtn.disabled = false;
                 submitBtn.innerText = "Confirm Registration";
             }
