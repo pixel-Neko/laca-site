@@ -39,15 +39,16 @@ app.use('/form', formRoute);
 app.use(`/${process.env.PRIVATE_URL}/subject`, subjectRoute);
 app.use('/email', emailRoute);
 app.use(`/${process.env.PRIVATE_URL}`, detailsRoute);
-  
-app.get('/seats', async(req, res) => {
-    try {
-        const seats = await Subject.find({});
-        return res.status(200).json(seats);
-    } catch (error) {
-        return res.status(400).json({ message: "Failed to fetch seats" });
-    }
-})
+
+// GET (seats api), prefer not to make it public
+// app.get('/seats', async(req, res) => {
+//     try {
+//         const seats = await Subject.find({});
+//         return res.status(200).json(seats);
+//     } catch (error) {
+//         return res.status(400).json({ message: "Failed to fetch seats" });
+//     }
+// })
 
 const PORT = 8089
 app.listen(PORT, () => console.log(`Server started on - http://localhost:${PORT}`));
