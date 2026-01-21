@@ -39,7 +39,8 @@ app.use('/form', formRoute);
 app.use(`/${process.env.PRIVATE_URL}/subject`, subjectRoute);
 app.use('/email', emailRoute);
 app.use(`/${process.env.PRIVATE_URL}`, detailsRoute);
-  
+
+// GET (seats api), prefer not to make it public
 // app.get('/seats', async(req, res) => {
 //     try {
 //         const seats = await Subject.find({});
